@@ -11,9 +11,6 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use('/users', routerUsers)
-app.use('/cards', routerCards)
-
 app.use((req, res, next) => {
   req.user = {
     _id: '631c6b3b8876fa14580096c7' // вставьте сюда _id созданного в предыдущем пункте пользователя
@@ -21,6 +18,11 @@ app.use((req, res, next) => {
 
   next();
 });
+
+app.use('/users', routerUsers)
+app.use('/cards', routerCards)
+
+
 
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
   useNewUrlParser: true,

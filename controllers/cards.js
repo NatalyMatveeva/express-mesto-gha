@@ -1,5 +1,4 @@
 /* eslint-disable */
-const card = require('../models/card');
 const Card = require('../models/card');
 
 
@@ -9,7 +8,7 @@ const createCard = (req, res) => {
   Card.create ({name, link, owner: userId})
   .then((card) => res.status(200).send({data: card}))
   .catch((error) => {
-    if (error.name = "ValidatorError"){
+    if (error.name = "ValidatorError") {
       return res.status(400).send({ message: "Переданы не корректные данные" })
     }
     return res.status(500).send({ message: error });
@@ -66,18 +65,18 @@ Card.findByIdAndUpdate(
  const dislikeCard = (req, res) =>{
 Card.findByIdAndUpdate(
   req.params.cardId,
-  { $pull: { likes: req.body.user._id } }, // убрать _id из массива
+  { $pull: { likes: req.user._id } }, // убрать _id из массива
   { new: true },
 )
 .then((cards) => {
+  if (cards ==null){
+     res.status(404).send({ message: "Передан несуществующий _id карточки" })
+  }
   res.status(200).send({data:cards});
 })
 .catch((error) => {
   if (error.name = "CastError"){
-    return res.status(400).send({ message: "Переданы некорректные данные для постановки лайка" })
-}
-else if (!card){
-  return res.status(404).send({ message: "Передан несуществующий _id карточки" })
+    res.status(400).send({ message: "Переданы некорректные данные для снятия лайка" })
 }
   else {
     res.status(500).send({ message: error })
