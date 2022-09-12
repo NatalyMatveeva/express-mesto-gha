@@ -5,10 +5,10 @@ const createUser = (req, res) => {
   const{name, about, avatar} = req.body;
   User.create ({name, about, avatar})
   .then((user) => {
-    res.status(200).send(user);
+    res.status(200).send({data: user});
   })
   .catch((error) => {
-    if (error.name === "ValidatorError"){
+    if (error.name = "ValidatorError"){
       return res.status(400).send({ message: "Переданы не корректные данные" })
   }
     else {res.status(500).send({ message: error })};
@@ -16,29 +16,28 @@ const createUser = (req, res) => {
 };
 
 const getUsersById = (req, res) => {
-  User.findById(req.params.id)
+  User.findById(req.params.userId)
   .then((user) => {
-    res.status(200).send(user);
+    res.status(200).send({data: user});
   })
   .catch((error) => {
-    if (error.name === "ValidatorError"){
-      return res.status(404).send({ message: "Переданы не корректные данные" })
+    if (error.name = "ValidatorError"){
+      return res.status(404).send({ message: "Пользователь по указанному _id не найден" })
   }
     else {res.status(500).send({ message: error })}
   });
       }
 
 const updateProfile = (req, res) => {
-    const { name, about } = req.body;
+      User.findByIdAndUpdate (req.user._id, {name: req.body.name, about: req.body.about})
 
-    User.findByIdAndUpdate (req.user._id, {name, about})
+      .then((user) => {
+        res.status(200).send({data: user});
+      })
 
-  .then((user) => {
-    res.status(200).send(user);
-  })
   .catch((error) => {
-    if (error.name === "ValidatorError"){
-      return res.status(404).send({ message: "" })
+    if (error.name = "ValidatorError"){
+      return res.status(400).send({ message: "Переданы некорректные данные при обновлении профиля" })
   }
     else {res.status(500).send({ message: error })};
   });
@@ -48,10 +47,10 @@ const patchMeAvatar  = (req, res) => {
       const {  avatar } = req.body;
       User.findByIdAndUpdate(req.user._id, {avatar})
       .then((user) => {
-        res.status(200).send(user);
+        res.status(200).send({data: user});
       })
       .catch((error) => {
-        if (error.name === "ValidatorError"){
+        if (error.name ="ValidatorError"){
           return res.status(404).send({ message: " " })
       }
        else{ res.status(500).send({ message: error })};
@@ -61,10 +60,10 @@ const patchMeAvatar  = (req, res) => {
 const getUsers = (req, res) => {
         User.find({})
         .then((users) => {
-          res.status(200).send(users);
+          res.status(200).send({data: user});
         })
         .catch((error) => {
-          if (error.name === "ValidatorError"){
+          if (error.name ="ValidatorError"){
             return res.status(404).send({ message: " " })
         }
           else {res.status(500).send({ message: error })};
