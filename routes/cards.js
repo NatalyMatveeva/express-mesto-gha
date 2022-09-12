@@ -3,8 +3,8 @@ const {createCard, deleteCard, getCards, likeCard, dislikeCard} = require ('../c
 
 const router = require('express').Router();
 
-router.get('/', createCard)
-router.post('/', getCards)
+router.post('/', createCard)
+router.get('/', getCards)
 router.delete('/:cardId', deleteCard)
 
 router.put('/:cardId', likeCard)

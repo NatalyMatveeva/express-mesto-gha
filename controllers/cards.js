@@ -3,13 +3,13 @@ const Card = require('../models/card');
 
 
 const createCard = (req, res) => {
-  const{name, link} = req.body;
-  Card.create ({name, link})
+  const{name, link, owner} = req.body;
+  Card.create ({name, link, owner})
   .then((card) => {
     res.status(200).send(card);
   })
   .catch((error) => {
-    if (error.name === "ValidatorError"){
+    if (error.name = "ValidatorError"){
       return res.status(400).send({ message: "Переданы не корректные данные" })
     }
     else {res.status(500).send({ message: error })};
@@ -17,18 +17,16 @@ const createCard = (req, res) => {
 };
 
 const deleteCard = (req, res) => {
-  Card.findById(req.params.id)
-  .then((card) => {
+  Card.findById(req.params.cardId)
+  .then(
+    (card) => {
+      if (!card) return res.status(404).send({ message: "Такой карточки не существует" });
     return card.remove().then(() => res.status(200).send(card));
-
   })
   .catch((error) => {
-    if (error.name === "ValidatorError"){
-      return res.status(404).send({ message: "Переданы не корректные данные" })
-    }
-       else {res.status(500).send({ message: error })};
+       res.status(500).send({ message: error });
   });
-      }
+  }
 
   const getCards = (req, res) => {
     Card.find({})
@@ -36,10 +34,7 @@ const deleteCard = (req, res) => {
       res.status(200).send(cards);
     })
     .catch((error) => {
-      if (error.name === "ValidatorError"){
-        return res.status(400).send({ message: "Переданы не корректные данные" })
-    }
-     else {res.status(500).send({ message: error })};
+    res.status(500).send({ message: error });
     });
     }
 
@@ -48,28 +43,42 @@ const deleteCard = (req, res) => {
 const likeCard = (req, res) => {
 Card.findByIdAndUpdate(
   req.params.cardId,
-  { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
+  { $addToSet: { likes: req.body.user._id } }, // добавить _id в массив, если его там нет
   { new: true },
 )
 .then((cards) => {
   res.status(200).send(cards);
 })
 .catch((error) => {
-  res.status(500).send({ message: error });
+  if (error.name === "CastError"){
+    return res.status(400).send({ message: "Передан несуществующий _id карточки" })
+}
+else if (req.body.user._id !== "631c6b3b8876fa14580096c7"){
+  return res.status(404).send({ message: "Переданы некорректные данные для постановки лайка" })
+}
+  else {
+    res.status(500).send({ message: error })
+  };
 });
 }
 
  const dislikeCard = (req, res) =>{
 Card.findByIdAndUpdate(
   req.params.cardId,
-  { $pull: { likes: req.user._id } }, // убрать _id из массива
+  { $pull: { likes: req.body.user._id } }, // убрать _id из массива
   { new: true },
 )
 .then((cards) => {
   res.status(200).send(cards);
 })
 .catch((error) => {
-  res.status(500).send({ message: error });
+  if (error.name === "CastError"){
+    return res.status(400).send({ message: "Передан несуществующий _id карточки" })
+}
+else if (req.body.user._id !== "631c6b3b8876fa14580096c7"){
+  return res.status(404).send({ message: "Переданы некорректные данные для снятия лайка" })
+}
+  else {res.status(500).send({ message: error })};
 });
 }
 
