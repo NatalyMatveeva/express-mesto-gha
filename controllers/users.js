@@ -32,7 +32,7 @@ const getUsersById = (req, res) => {
       }
 
 const updateProfile = (req, res) => {
-      User.findByIdAndUpdate (req.user._id, {name: req.body.name, about: req.body.about}, { runValidators: true })
+      User.findByIdAndUpdate (req.user._id, {name: req.body.name, about: req.body.about},{ new: true })
       .then((user) => {
         if (!user){
            res.status(404).send({ message: "Пользователь с указанным _id не найден" })
@@ -51,7 +51,7 @@ const updateProfile = (req, res) => {
 
 const patchMeAvatar  = (req, res) => {
       const {  avatar } = req.body;
-      User.findByIdAndUpdate(req.user._id, {avatar}, { runValidators: true })
+      User.findByIdAndUpdate(req.user._id, {avatar}, { new: true })
       .then((user) => {
         res.status(200).send({data: user});
       })
