@@ -34,7 +34,10 @@ const deleteCard = (req, res) => {
       res.status(200).send(cards);
     })
     .catch((error) => {
-    res.status(500).send({ message: error });
+      if (error.name ="ValidatorError"){
+        return res.status(400).send({ message: "Переданы некорректные данные " })
+    }
+      else {res.status(500).send({ message: error })};
     });
     }
 
