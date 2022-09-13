@@ -1,4 +1,5 @@
 /* eslint-disable */
+const user = require('../models/user');
 const User = require('../models/user')
 
 const createUser = (req, res) => {
@@ -32,34 +33,37 @@ const getUsersById = (req, res) => {
 
 const updateProfile = (req, res) => {
       User.findByIdAndUpdate (req.user._id, {name: req.body.name, about: req.body.about}, { runValidators: true })
-
-      .then( (user) => {
-        if (!user)  res.status(404).send({ message: "Такой пользователь не существует" })
-     res.status(200).send({data: user});
+      .then((user) => {
+        if (!user){
+           res.status(404).send({ message: "Пользователь с указанным _id не найден" })
+        }
+        res.status(200).send({data:user});
       })
-
-  .catch((error) => {
-    if (error.name = "ValidatorError"){
-      return res.status(400).send({ message: "Переданы некорректные данные при обновлении профиля" })
-  }
-    else {res.status(500).send({ message: error })};
-  });
-};
+      .catch((error) => {
+        if (error.name = "ValidatorError"){
+          res.status(400).send({ message: "Переданы некорректные данные " })
+      }
+        else {
+          res.status(500).send({ message: error })
+        };
+      });
+      }
 
 const patchMeAvatar  = (req, res) => {
       const {  avatar } = req.body;
       User.findByIdAndUpdate(req.user._id, {avatar}, { runValidators: true })
-      .then( (user) => {
-        if (!user)  res.status(404).send({ message: "Такой пользователь не существует" })
-     res.status(200).send({data: user});
+      .then((user) => {
+        res.status(200).send({data: user});
       })
       .catch((error) => {
-        if (error.name ="ValidatorError"){
-          return res.status(404).send({ message: " " })
+        if (error.name = "ValidatorError"){
+          res.status(400).send({ message: "Переданы некорректные данные " })
       }
-       else{ res.status(500).send({ message: error })};
+        else {
+          res.status(500).send({ message: error })
+        };
       });
-          }
+      }
 
 const getUsers = (req, res) => {
         User.find({})
