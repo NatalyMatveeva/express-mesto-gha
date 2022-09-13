@@ -22,7 +22,9 @@ app.use((req, res, next) => {
 app.use('/users', routerUsers)
 app.use('/cards', routerCards)
 
-
+app.use('*', (req, res) => {
+  res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
+});
 
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
   useNewUrlParser: true,
