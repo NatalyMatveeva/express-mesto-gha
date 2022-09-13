@@ -33,8 +33,9 @@ const getUsersById = (req, res) => {
 const updateProfile = (req, res) => {
       User.findByIdAndUpdate (req.user._id, {name: req.body.name, about: req.body.about}, { runValidators: true })
 
-      .then((user) => {
-        res.status(200).send({data: user});
+      .then( (user) => {
+        if (!user)  res.status(404).send({ message: "Такой пользователь не существует" })
+     res.status(200).send({data: user});
       })
 
   .catch((error) => {
@@ -48,8 +49,9 @@ const updateProfile = (req, res) => {
 const patchMeAvatar  = (req, res) => {
       const {  avatar } = req.body;
       User.findByIdAndUpdate(req.user._id, {avatar}, { runValidators: true })
-      .then((user) => {
-        res.status(200).send({data: user});
+      .then( (user) => {
+        if (!user)  res.status(404).send({ message: "Такой пользователь не существует" })
+     res.status(200).send({data: user});
       })
       .catch((error) => {
         if (error.name ="ValidatorError"){
