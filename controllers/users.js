@@ -17,11 +17,10 @@ const createUser = (req, res) => {
 
 const getUsersById = (req, res) => {
   User.findById(req.params.userId)
-  .then(
-    (user) => {
-      if (!user) return res.status(404).send({ message: "Такой пользователь не существует" });
-    return card.remove().then(() => res.status(200).send({data: user}));
-  })
+  .then( (user) => {
+      if (!user)  res.status(404).send({ message: "Такой пользователь не существует" })
+   res.status(200).send({data: user});
+    })
 
   .catch((error) => {
     if (error.name = "ValidatorError"){
