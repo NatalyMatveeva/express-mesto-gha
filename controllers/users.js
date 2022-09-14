@@ -9,10 +9,11 @@ const createUser = (req, res) => {
     })
     .catch((err) => {
       if (err.name === 'ValidatorError') {
-        res.status(400).send({ message: 'Переданы некорректные данные ' });
-      } else {
-        res.status(500).send({ message: `Произошла ошибка ${err}` });
+        return res
+          .status(400)
+          .send({ message: 'Переданы некорректные данные ' });
       }
+      return res.status(500).send({ message: `Произошла ошибка ${err}` });
     });
 };
 
@@ -24,10 +25,11 @@ const getUsersById = (req, res) => {
     })
     .catch((err) => {
       if (err.name === 'ValidatorError') {
-        res.status(400).send({ message: 'Переданы некорректные данные ' });
-      } else {
-        res.status(500).send({ message: `Произошла ошибка ${err}` });
+        return res
+          .status(400)
+          .send({ message: 'Переданы некорректные данные ' });
       }
+      return res.status(500).send({ message: `Произошла ошибка ${err}` });
     });
 };
 
@@ -41,10 +43,11 @@ const updateProfile = (req, res) => {
     })
     .catch((err) => {
       if (err.name === 'ValidatorError') {
-        res.status(400).send({ message: 'Переданы некорректные данные ' });
-      } else {
-        res.status(500).send({ message: `Произошла ошибка ${err}` });
+        return res
+          .status(400)
+          .send({ message: 'Переданы некорректные данные ' });
       }
+      return res.status(500).send({ message: `Произошла ошибка ${err}` });
     });
 };
 
@@ -56,10 +59,11 @@ const patchMeAvatar = (req, res) => {
     })
     .catch((err) => {
       if (err.name === 'ValidatorError') {
-        res.status(400).send({ message: 'Переданы некорректные данные ' });
-      } else {
-        res.status(500).send({ message: `Произошла ошибка ${err}` });
+        return res
+          .status(400)
+          .send({ message: 'Переданы некорректные данные ' });
       }
+      return res.status(500).send({ message: `Произошла ошибка ${err}` });
     });
 };
 
@@ -70,10 +74,11 @@ const getUsers = (req, res) => {
     })
     .catch((err) => {
       if (err.name === 'ValidatorError') {
-        res.status(400).send({ message: 'Переданы некорректные данные ' });
-      } else {
-        res.status(500).send({ message: `Произошла ошибка ${err}` });
+        return res
+          .status(400)
+          .send({ message: 'Переданы некорректные данные ' });
       }
+      return res.status(500).send({ message: `Произошла ошибка ${err}` });
     });
 };
 

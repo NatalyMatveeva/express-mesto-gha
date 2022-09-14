@@ -9,10 +9,11 @@ const createCard = (req, res) => {
     .then((card) => res.status(200).send({ data: card }))
     .catch((err) => {
       if (err.name === 'ValidatorError') {
-        res.status(400).send({ message: 'Переданы некорректные данные ' });
-      } else {
-        res.status(500).send({ message: `Произошла ошибка ${err}` });
+        return res
+          .status(400)
+          .send({ message: 'Переданы некорректные данные ' });
       }
+      return res.status(500).send({ message: `Произошла ошибка ${err}` });
     });
 };
 
@@ -26,10 +27,11 @@ const deleteCard = (req, res) => {
     )
     .catch((err) => {
       if (err.name === 'ValidatorError') {
-        res.status(400).send({ message: 'Переданы некорректные данные ' });
-      } else {
-        res.status(500).send({ message: `Произошла ошибка ${err}` });
+        return res
+          .status(400)
+          .send({ message: 'Переданы некорректные данные ' });
       }
+      return res.status(500).send({ message: `Произошла ошибка ${err}` });
     });
 };
 
@@ -40,10 +42,11 @@ const getCards = (req, res) => {
     })
     .catch((err) => {
       if (err.name === 'ValidatorError') {
-        res.status(400).send({ message: 'Переданы некорректные данные ' });
-      } else {
-        res.status(500).send({ message: `Произошла ошибка ${err}` });
+        return res
+          .status(400)
+          .send({ message: 'Переданы некорректные данные ' });
       }
+      return res.status(500).send({ message: `Произошла ошибка ${err}` });
     });
 };
 
@@ -61,10 +64,11 @@ const likeCard = (req, res) => {
     })
     .catch((err) => {
       if (err.name === 'ValidatorError') {
-        res.status(400).send({ message: 'Переданы некорректные данные ' });
-      } else {
-        res.status(500).send({ message: `Произошла ошибка ${err}` });
+        return res
+          .status(400)
+          .send({ message: 'Переданы некорректные данные ' });
       }
+      return res.status(500).send({ message: `Произошла ошибка ${err}` });
     });
 };
 
@@ -82,10 +86,11 @@ const dislikeCard = (req, res) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        res.status(400).send({ message: 'Переданы некорректные данные для снятия лайка' });
-      } else {
-        res.status(500).send({ message: `Произошла ошибка ${err}` });
+        return res
+          .status(400)
+          .send({ message: 'Переданы некорректные данные для снятия лайка' });
       }
+      return res.status(500).send({ message: `Произошла ошибка ${err}` });
     });
 };
 
