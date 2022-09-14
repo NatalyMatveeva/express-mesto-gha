@@ -1,4 +1,3 @@
-/* eslint-disable */
 const mongoose = require('mongoose');
 
 const cardSchema = new mongoose.Schema({
@@ -12,22 +11,22 @@ const cardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-    owner: {
+  owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
     required: true,
-    },
+  },
 
-    likes: {
-      type: [
-        mongoose.Schema.Types.ObjectId,
-      ],
-      default: [],
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
-  });
+  likes: {
+    type: [
+      mongoose.Schema.Types.ObjectId,
+    ],
+    default: [],
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
-  module.exports = mongoose.model('card', cardSchema);
+module.exports = mongoose.model('card', cardSchema);
