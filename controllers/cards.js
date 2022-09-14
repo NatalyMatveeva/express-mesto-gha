@@ -8,7 +8,7 @@ const createCard = (req, res) => {
   Card.create({ name, link, owner: userId })
     .then((card) => res.status(200).send({ data: card }))
     .catch((err) => {
-      if (err.name === 'ValidatorError') {
+      if (err.name === 'ValidationError') {
         return res
           .status(400)
           .send({ message: 'Переданы некорректные данные ' });
@@ -26,7 +26,7 @@ const deleteCard = (req, res) => {
       },
     )
     .catch((err) => {
-      if (err.name === 'ValidatorError') {
+      if (err.name === 'ValidationError') {
         return res
           .status(400)
           .send({ message: 'Переданы некорректные данные ' });
@@ -41,7 +41,7 @@ const getCards = (req, res) => {
       res.status(200).send(cards);
     })
     .catch((err) => {
-      if (err.name === 'ValidatorError') {
+      if (err.name === 'ValidationError') {
         return res
           .status(400)
           .send({ message: 'Переданы некорректные данные ' });
@@ -63,7 +63,7 @@ const likeCard = (req, res) => {
       res.status(200).send({ data: cards });
     })
     .catch((err) => {
-      if (err.name === 'ValidatorError') {
+      if (err.name === 'ValidationError') {
         return res
           .status(400)
           .send({ message: 'Переданы некорректные данные ' });

@@ -8,7 +8,7 @@ const createUser = (req, res) => {
       res.status(200).send({ data: user });
     })
     .catch((err) => {
-      if (err.name = 'ValidatorError') {
+      if (err.name === 'ValidationError') {
         return res
           .status(400)
           .send({ message: 'Переданы некорректные данные ' });
@@ -24,7 +24,7 @@ const getUsersById = (req, res) => {
       res.status(200).send({ data: user });
     })
     .catch((err) => {
-      if (err.name = 'ValidatorError') {
+      if (err.name === 'ValidationError') {
         return res
           .status(400)
           .send({ message: 'Переданы некорректные данные ' });
@@ -42,7 +42,7 @@ const updateProfile = (req, res) => {
       res.status(200).send({ data: user });
     })
     .catch((err) => {
-      if (err.name = 'ValidatorError') {
+      if (err.name === 'ValidationError') {
         return res
           .status(400)
           .send({ message: 'Переданы некорректные данные ' });
@@ -58,7 +58,7 @@ const patchMeAvatar = (req, res) => {
       res.status(200).send({ data: user });
     })
     .catch((err) => {
-      if (err.name = 'ValidatorError') {
+      if (err.name === 'ValidationError') {
         return res
           .status(400)
           .send({ message: 'Переданы некорректные данные ' });
@@ -73,7 +73,7 @@ const getUsers = (req, res) => {
       res.status(200).send({ data: user });
     })
     .catch((err) => {
-      if (err.name = 'ValidatorError') {
+      if (err.name === 'ValidationError') {
         return res
           .status(400)
           .send({ message: 'Переданы некорректные данные ' });
