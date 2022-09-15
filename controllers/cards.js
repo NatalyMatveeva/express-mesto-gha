@@ -18,11 +18,11 @@ const createCard = (req, res) => {
 };
 
 const deleteCard = (req, res) => {
-  Card.findById(req.params.cardId)
+  Card.deleteById(req.params.cardId)
     .then(
       (card) => {
         if (!card) return res.status(404).send({ message: 'Такой карточки не существует' });
-        return card.remove().then(() => res.status(200).send(card));
+        return res.status(200).send({ message: 'Карточка удалена' });
       },
     )
     .catch((err) => {
@@ -40,14 +40,7 @@ const getCards = (req, res) => {
     .then((cards) => {
       res.status(200).send(cards);
     })
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        return res
-          .status(400)
-          .send({ message: 'Переданы некорректные данные ' });
-      }
-      return res.status(500).send({ message: `Произошла ошибка ${err}` });
-    });
+    .catch((err) => res.status(500).send({ message: `Произошла ошибка ${err}` }));
 };
 
 const likeCard = (req, res) => {
