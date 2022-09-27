@@ -1,11 +1,11 @@
 const {
-  createUser, getUsersById, getUsers, updateProfile, patchMeAvatar,
+  getUsersById, getUsers, updateProfile, patchMeAvatar, getCurrentUser,
 } = require('../controllers/users');
 
 // eslint-disable-next-line import/order
 const router = require('express').Router();
 
-router.post('/', createUser);
+router.get('/me', getCurrentUser);
 router.get('/:userId', getUsersById);
 router.get('/', getUsers);
 
